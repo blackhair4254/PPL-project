@@ -379,7 +379,8 @@ Route::group(['prefix' => 'guru', 'middleware' => ['guru']], function () {
 
 
     //CRUD PENGUMPULAN
-    Route::get('/dashboard/ujian/pengumpulan_ujian', [GuruUjianController::class, 'showPengumpulan'])->name('guru.dashboard.ujian.pengumpulan');
+    Route::get('/dashboard/ujian/pengumpulan_ujian', [GuruUjianController::class, 'index'])->name('guru.dashboard.ujian.pengumpulan');
+    Route::delete('pengumpulan_ujian/{id}', [GuruUjianController::class, 'destroy'])->name('guru.dashboard.pengumpulan_ujian.destroy');
     /**
      * END UJIAN
      */

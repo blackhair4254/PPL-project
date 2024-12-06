@@ -24,7 +24,7 @@ class UjianSiswaController extends Controller
      */
     public function start($id)
     {
-        $ujian = Ujian::with('soal_ujian')->findOrFail($id);
+        $ujian = Ujian::with('soalUjian')->findOrFail($id);
 
         // Set waktu durasi ujian (contoh: 30 menit)
         $durasi = 30; // dalam menit
@@ -42,7 +42,7 @@ class UjianSiswaController extends Controller
     public function submit(Request $request, $id)
     {
         $ujian = Ujian::findOrFail($id);
-        $soalIds = $ujian->soalUjian->pluck('id_soal_ujian');
+        $soalIds = $ujian->soal_ujian->pluck('id_soal_ujian');
 
         foreach ($soalIds as $soalId) {
             jawaban_ujian::create([

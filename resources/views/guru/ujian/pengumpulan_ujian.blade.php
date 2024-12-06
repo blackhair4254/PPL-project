@@ -33,60 +33,44 @@
 
         {{-- Main Content --}}
 
-        <div class="container mx-auto mt-10">
-            <h2 class="text-2xl font-bold mb-4">Daftar Soal Ujian</h2>
-
-            <!-- Button for Importing Excel -->
-            <div class="mb-4">
-                <form action="{{ route('soal_ujian.import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <label class="block mb-2 text-sm font-medium text-gray-700" for="file_input">Import Soal Ujian dari Excel</label>
-                    <input name="file" type="file" class="file-input block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" id="file_input">
-                    <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Upload</button>
-                </form>
-            </div>
-
-            <!-- Table for CRUD -->
-            <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                            <th class="py-3 px-6">No.</th>
-                            <th class="py-3 px-6">Judul Ujian</th>
-                            <th class="py-3 px-6">Soal</th>
-                            <th class="py-3 px-6">Opsi A</th>
-                            <th class="py-3 px-6">Opsi B</th>
-                            <th class="py-3 px-6">Opsi C</th>
-                            <th class="py-3 px-6">Opsi D</th>
-                            <th class="py-3 px-6">Kunci Jawaban</th>
-                            <th class="py-3 px-6">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($soalUjian as $soal)
-                        <tr class="bg-white border-b">
-                            <td class="py-4 px-6">{{ $loop->iteration }}</td>
-                            <td class="py-4 px-6">{{ $soal->ujian->judul ?? 'Tidak ada' }}</td>
-                            <td class="py-4 px-6">{{ $soal->teks_soal }}</td>
-                            <td class="py-4 px-6">{{ $soal->opsi_a }}</td>
-                            <td class="py-4 px-6">{{ $soal->opsi_b }}</td>
-                            <td class="py-4 px-6">{{ $soal->opsi_c }}</td>
-                            <td class="py-4 px-6">{{ $soal->opsi_d }}</td>
-                            <td class="py-4 px-6">{{ $soal->kunci_jawaban }}</td>
-                            <td class="py-4 px-6">
-                                <a href="{{ route('soal_ujian.edit', ['id' => $soal->id_soal_ujian]) }}" class="text-blue-600 hover:underline">Edit</a> |
-                                <form action="{{ route('soal_ujian.destroy', $soal->id_soal_ujian) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th class="py-3 px-6">No.</th>
+                        <th class="py-3 px-6">Nama Siswa</th>
+                        <th class="py-3 px-6">Judul Ujian</th>
+                        <th class="py-3 px-6">Tanggal Pengumpulan</th>
+                        <th class="py-3 px-6">Nilai</th>
+                        <th class="py-3 px-6">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($pengumpulanUjian as $item)
+                    {{-- {{ dd($item) }} --}}
+                    <tr class="bg-white border-b">
+                        <td class="py-4 px-6">{{ $loop->iteration }}</td>
+                        <td class="py-4 px-6">{{ $item->siswa->nama_siswa ?? 'Tidak Ada Data' }}</td>
+                        <td class="py-4 px-6">{{ $item->ujian->judul ?? 'Tidak Ada Data' }}</td>
+                        <td class="py-4 px-6">{{ $item->tanggal_pengumpulan }}</td>
+                        <td class="py-4 px-6">{{ $item->nilai ?? 'Belum Dinilai' }}</td>
+                        <td class="py-4 px-6">
+                            {{-- <a href="{{ route('guru.dashboard.pengumpulan_ujian.edit', $item->id_pengumpulan_ujian) }}" class="text-blue-600 hover:underline">Edit</a> | --}}
+                            <form action="{{ route('guru.dashboard.pengumpulan_ujian.destroy', $item->id_pengumpulan_ujian) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                    @if($pengumpulanUjian->isEmpty())
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-gray-700">Tidak ada data pengumpulan ujian.</td>
+                    </tr>
+                    @endif
+                </tbody>
+            </table>
         </div>
-        
     </div>
 </x-app-guru-layout>

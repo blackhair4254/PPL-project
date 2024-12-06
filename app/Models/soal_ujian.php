@@ -43,18 +43,19 @@ class soal_ujian extends Model
         return 'string';
     }
 
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $primaryKey = 'id_soal_ujian';
-    
+
     protected $table = 'soal_ujian';
 
     protected $fillable = [
         'ujian_id',
+        'judul_ujian',
         'teks_soal',
         'opsi_a',
         'opsi_b',

@@ -15,6 +15,7 @@ class SoalUjianImport implements ToModel
     public function model(array $row)
     {
         return new soal_ujian([
+            'judul_ujian'  => $row['judul_ujian'],
             'teks_soal'    => $row['teks_soal'],
             'opsi_a'       => $row['opsi_a'],
             'opsi_b'       => $row['opsi_b'],

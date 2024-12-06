@@ -139,11 +139,11 @@
                                     Bank Soal
                                 </x-sidebar-dropdown-list-link>
                             </li>
-                            {{-- <li>
+                            <li>
                                 <x-sidebar-dropdown-list-link href="{{ route('guru.dashboard.ujian.pengumpulan') }}" :active="request()->is('guru/dashboard/ujian/pengumpulan_ujian')">
-                                    Pengumpulan
+                                    Beranda pengumpulan
                                 </x-sidebar-dropdown-list-link>
-                            </li> --}}
+                            </li>
                         </x-sidebar-dropdown-list>
                     </li>
 

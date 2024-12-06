@@ -10,10 +10,11 @@ use App\Models\ujian;
 use App\Models\pengumpulan_ujian;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\SoalUjianImport;
+use App\Models\Siswa;
 
 class GuruUjianController extends Controller
 {
-    //CRUD JAWABAN UJIAN
+    //CRUD JAWABAN========================================================================================================
     public function showJawabanUjian()
     {
         $jawabanUjian = jawaban_ujian::all();
@@ -54,7 +55,7 @@ class GuruUjianController extends Controller
         return redirect()->route('guru.dashboard.ujian.jawaban_ujian')->with('success', 'Jawaban ujian berhasil diperbarui.');
     }
 
-    //CRUD SOAL
+    //CRUD SOAL=================================================================================================================
     public function showSoalUjian()
     {
         $soalUjian = soal_ujian::all();
@@ -117,13 +118,21 @@ class GuruUjianController extends Controller
     {
         return view("guru.ujian.pengumpulan");
     }
-    //CRUD PENGUMPULAN UJIAN
-    public function showPengumpulan(){
-        $pengumpulan = pengumpulan_ujian::all();
-        $ujian = ujian::all();
+    //CRUD PENGUMPULAN UJIAN===============================================================================================
+    public function index(){
+        $pengumpulanUjian = pengumpulan_ujian::with(['siswa', 'ujian'])->get();
+        // $namaSiswa = Siswa::select('nama_siswa')->get();
 
-        return view("guru.dashboard.ujian.pengumpulan", compact("pengumpulan","ujian"));
+        return view("guru.ujian.pengumpulan_ujian", compact("pengumpulanUjian"));
 
         // return view("guru.dashboard.ujian.pengumpulan");
+    }
+
+    public function destroy($id)
+    {
+        $pengumpulanUjian = pengumpulan_ujian::findOrFail($id);
+        $pengumpulanUjian->delete();
+
+        return redirect()->route('guru.pengumpulan_ujian.index')->with('success', 'Data berhasil dihapus.');
     }
 }
